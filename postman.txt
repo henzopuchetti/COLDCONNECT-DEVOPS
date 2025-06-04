@@ -1,0 +1,92 @@
+---Auth Register---
+POST:
+http://localhost:8080/auth/register
+{
+  "email": "admin@email.com",
+  "senha": "123456"
+}
+
+--------------------------------------------------------------------
+
+---Login---
+POST:
+http://localhost:8080/auth/login
+{
+  "email": "admin@email.com",
+  "senha": "123456"
+}
+
+Copiar o token gerado!!
+
+--------------------------------------------------------------------
+
+!!!AVISO!!!
+  A partir de agora sempre que vc for fazer alguma coisa vc tem que adicionar esse token:
+  -> antes de fazer a requisição vá na aba de AUTHORIZATION
+  -> no campo (Auth Type) escolha a opção BEARER TOKEN 
+  -> cole o Token copiado e faça a requisição
+
+---Abrigos---
+POST:
+http://localhost:8080/abrigos
+{
+  "nome": "Abrigo Central",
+  "localizacao": "Sudeste",
+  "capacidadeTotal": 100,
+  "capacidadeAtual": 80,
+  "status": "ATIVO"
+}
+
+GET: 
+http://localhost:8080/abrigos
+
+--------------------------------------------------------------------
+
+---Leituras---
+POST:
+http://localhost:8080/leituras
+{
+  "latitude": -15.0,
+  "longitude": -47.0,
+  "temperatura": -1.5
+}
+
+--------------------------------------------------------------------
+
+---Alertas---
+GET (é gerado automaticamente):
+http://localhost:8080/alertas
+
+--------------------------------------------------------------------
+
+---Ações---
+GET (é gerado automaticamente):
+http://localhost:8080/acoes
+
+--------------------------------------------------------------------
+
+---Solicitações---
+POST:
+http://localhost:8080/solicitacoes
+{
+  "tipoRecurso": "Cobertores",
+  "quantidade": 20,
+  "abrigoId": 1,
+  "alertaId": 1
+}
+
+GET:
+http://localhost:8080/solicitacoes
+
+--------------------------------------------------------------------
+
+---Respostas---
+POST:
+http://localhost:8080/respostas
+{
+  "solicitacaoId": 1,
+  "atendidoPor": "Instituto Esperança",
+  "observacao": "Vamos entregar os cobertores hoje",
+  "novoStatus": "ATENDIDO"
+}
+
