@@ -1,0 +1,122 @@
+comandos da maquina virtual
+
+Criação da Vm Linux no Azure via CLI:
+az group create \
+  --name Gs \
+  --location brazilsouth
+
+az vm create \
+  --resource-group Gs \
+  --name Gs-Devops \
+  --image Ubuntu2204 \
+  --admin-username henzobp \
+  --authentication-type password \
+  --admin-password 'Henzo100905@' \
+  --size Standard_B1ms
+
+Anotar o Ip da VM:
+4.201.129.142
+
+Abrir as portas da VM:
+# Porta 22 - SSH
+az network nsg rule create \
+  --resource-group Gs \
+  --nsg-name Gs-DevopsNSG \
+  --name Allow-SSH \
+  --priority 1001 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --destination-port-range 22
+
+# Porta 8080 - Acesso à aplicação Java
+az network nsg rule create \
+  --resource-group Gs \
+  --nsg-name GS-DevopsNSG \
+  --name Allow-App \
+  --priority 1002 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --destination-port-range 8080
+
+# Porta 3306 - MySQL
+az network nsg rule create \
+  --resource-group Gs \
+  --nsg-name Gs-DevopsNSG \
+  --name Allow-MySQL \
+  --priority 1003 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --destination-port-range 3306 \
+  --source-address-prefixes '*' \
+  --destination-address-prefixes '*' \
+  --description "Permitir acesso ao MySQL na porta 3306"
+
+Confirmando se realmente as portas foram abertas:
+az network nsg rule list \
+  --resource-group Gs \
+  --nsg-name Gs-DevopsNSG \
+  --output table
+
+#antes de acessar a VM faça isso para n dar erro por causa do IP:
+ssh-keygen -R 4.201.129.142
+
+Acessar a VM:
+ssh henzobp@4.201.129.142
+
+Instalando Docker na Vm:
+sudo apt update
+sudo apt install -y docker.io
+
+# Habilitar e iniciar o Docker
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# Criar usuário para rodar a aplicação sem privilégio
+sudo useradd -m appuser
+sudo usermod -aG docker appuser
+
+# Rodando o Container MySQL
+sudo docker run -d \
+  --name mysql-container \
+  -e MYSQL_ROOT_PASSWORD=senha123 \
+  -e MYSQL_DATABASE=coldconnect_db \
+  -p 3306:3306 \
+  mysql:8.0
+
+# Criar a rede Docker (só precisa rodar uma vez)
+sudo docker network create coldconnect-net
+
+# Conectar o container do MySQL na rede coldconnect-net
+sudo docker network connect coldconnect-net mysql-container
+
+#Instalar o Git
+sudo apt install -y git
+
+#Clonar meu repositorio Java
+git clone https://github.com/henzopuchetti/COLDCONNECT-DEVOPS.git
+
+# Entrar no projeto:
+cd COLDCONNECT-DEVOPS
+
+# Buildar e rodar a imagem Java em background:
+sudo docker build -t coldconnect-java-api .
+
+#Rodar o projeto:
+sudo docker run -d \
+  --name coldconnect-api \
+  --network coldconnect-net \
+  -p 8080:8080 \
+  coldconnect-java-api
+
+#Verificando se o Container esta rodando:
+sudo docker ps
+
+#Deletar VM:
+az vm delete \
+  --resource-group Gs \
+  --name Gs-Devops \
+  --yes \
+  --no-wait
