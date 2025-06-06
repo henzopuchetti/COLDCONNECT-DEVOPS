@@ -95,29 +95,37 @@ A API não é apenas CRUD. Ela aplica lógica automatizada no backend para reagi
 
 ---
 
+## ⚙️ Como Rodar o Projeto
+
+### Pré-requisitos:
+- Java 17 instalado
+- Maven instalado
+
+### Passos:
+```bash
+# Clone o repositório
+git clone https://github.com/seuusuario/ColdConnect.git
+cd ColdConnect
+
+# Compile o projeto
+mvn clean install
+
+# Rode a aplicação
+mvn spring-boot:run
+```
+
+A API estará disponível em:
+📍 http://localhost:8080
+
+5. [Clique aqui para baixar o .txt com os endpoints para colocar no postman](postman.txt)
+
+---
 ## 🔍 Documentação da API
 
 Após rodar o projeto, acesse:
 
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 - Documentação JSON: `http://localhost:8080/api-docs`
-
----
-
-## 🧪 Como rodar
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seuusuario/ColdConnect.git
-   ```
-
-2. Abra no VS Code ou Eclipse com suporte ao Maven.
-
-3. Execute o projeto como aplicação Spring Boot.
-
-4. Acesse `http://localhost:8080` para testar os endpoints.
-
-5. [Clique aqui para baixar o .txt com os endpoints para colocar no postman](postman.txt)
 
 ---
 
