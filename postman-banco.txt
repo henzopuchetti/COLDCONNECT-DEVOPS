@@ -1,6 +1,39 @@
+#Conectar no MySQL Workbench
+
+Connection Name: ColdConnect
+Hostname: 4.201.129.142
+Port: 3306
+Username: root
+Password: senha123
+
+#Comanddos para ver os dados sendo inseridos na tabela
+USE coldconnect_db;
+SELECT * FROM usuario;
+
+USE coldconnect_db;
+SELECT * FROM abrigo;
+
+USE coldconnect_db;
+SELECT * FROM leitura_temperatura;
+
+USE coldconnect_db;
+SELECT * FROM alerta_frio;
+
+USE coldconnect_db;
+SELECT * FROM acao_emergencial;
+
+USE coldconnect_db;
+SELECT * FROM solicitacao_recurso;
+
+USE coldconnect_db;
+SELECT * FROM resposta_solicitacao;
+
+http://4.201.129.142:8080
+
+Comandos no Postman:
 ---Auth Register---
 POST:
-http://localhost:8080/auth/register
+http://4.201.129.142:8080/auth/register
 {
   "email": "admin@email.com",
   "senha": "123456"
@@ -10,7 +43,7 @@ http://localhost:8080/auth/register
 
 ---Login---
 POST:
-http://localhost:8080/auth/login
+http://4.201.129.142:8080/auth/login
 {
   "email": "admin@email.com",
   "senha": "123456"
@@ -28,7 +61,7 @@ Copiar o token gerado!!
 
 ---Abrigos---
 POST:
-http://localhost:8080/abrigos
+http://4.201.129.142:8080/abrigos
 {
   "nome": "Abrigo Central",
   "localizacao": "Sudeste",
@@ -38,13 +71,13 @@ http://localhost:8080/abrigos
 }
 
 GET: 
-http://localhost:8080/abrigos
+http://4.201.129.142:8080/abrigos
 
 GET com filtro:
-http://localhost:8080/abrigos/filtro?nome=Abrigo
+http://4.201.129.142:8080/abrigos/filtro?nome=Abrigo
 
 PUT:
-http://localhost:8080/abrigos/1
+http://4.201.129.142:8080/abrigos/1
 {
   "id": 1,
   "nome": "Abrigo Central Atualizado",
@@ -55,13 +88,13 @@ http://localhost:8080/abrigos/1
 }
 
 DELETE:
-http://localhost:8080/abrigos/1
+http://4.201.129.142:8080/abrigos/1
 
 --------------------------------------------------------------------
 
 ---Leituras---
 POST:
-http://localhost:8080/leituras
+http://4.201.129.142:8080/leituras
 {
   "latitude": -15.0,
   "longitude": -47.0,
@@ -69,13 +102,13 @@ http://localhost:8080/leituras
 }
 
 GET:
-http://localhost:8080/leituras
+http://4.201.129.142:8080/leituras
 
 GET filtros:
-http://localhost:8080/leituras/filtrar?temperaturaMax=20
+http://4.201.129.142:8080/leituras/filtrar?temperaturaMax=20
 
 PUT:
-http://localhost:8080/leituras/1
+http://4.201.129.142:8080/leituras/1
 {
   "latitude": -15.0,
   "longitude": -47.0,
@@ -83,39 +116,39 @@ http://localhost:8080/leituras/1
 }
 
 DELETE:
-http://localhost:8080/leituras/1
+http://4.201.129.142:8080/leituras/1
 
 --------------------------------------------------------------------
 
 ---Alertas---
 GET (é gerado automaticamente):
-http://localhost:8080/alertas
+http://4.201.129.142:8080/alertas
 
 GET com filtro:
-http://localhost:8080/alertas?regiao=Sul
+http://4.201.129.142:8080/alertas?regiao=Sul
 
 --------------------------------------------------------------------
 
 ---Ações---
 GET (é gerado automaticamente):
-http://localhost:8080/acoes
+http://4.201.129.142:8080/acoes
 
 GET com filtro:
-http://localhost:8080/acoes?status=PENDENTE
+http://4.201.129.142:8080/acoes?status=PENDENTE
 
 PUT:
-http://localhost:8080/acoes/1
+http://4.201.129.142:8080/acoes/1
 {
   "tipo": "Alerta de Inundação",
   "status": "EM_ANDAMENTO",
-  "alertaFrioId": 5
+  "alertaFrioId": 1
 }
 
 --------------------------------------------------------------------
 
 ---Solicitações---
 POST:
-http://localhost:8080/solicitacoes
+http://4.201.129.142:8080/solicitacoes
 {
   "tipoRecurso": "Cobertores",
   "quantidade": 20,
@@ -124,13 +157,13 @@ http://localhost:8080/solicitacoes
 }
 
 GET:
-http://localhost:8080/solicitacoes
+http://4.201.129.142:8080/solicitacoes
 
 GET com filtro:
-http://localhost:8080/solicitacoes?tipoRecurso=Cobertores
+http://4.201.129.142:8080/solicitacoes?tipoRecurso=Cobertores
 
 PUT:
-http://localhost:8080/solicitacoes/1
+http://4.201.129.142:8080/solicitacoes/1
 {
   "tipoRecurso": "Cobertores",
   "quantidade": 25,
@@ -139,13 +172,13 @@ http://localhost:8080/solicitacoes/1
 }
 
 DELETE:
-http://localhost:8080/solicitacoes/1
+http://4.201.129.142:8080/solicitacoes/1
 
 --------------------------------------------------------------------
 
 ---Respostas---
 POST:
-http://localhost:8080/respostas
+http://4.201.129.142:8080/respostas
 {
   "solicitacaoId": 1,
   "atendidoPor": "Instituto Esperança",
@@ -154,13 +187,13 @@ http://localhost:8080/respostas
 }
 
 GET:
-http://localhost:8080/respostas
+http://4.201.129.142:8080/respostas
 
 GET com filtro:
-http://localhost:8080/respostas?page=0&size=10&sort=atendidoPor,asc&atendidoPor=Esperança&novoStatus=ATENDIDO
+http://4.201.129.142:8080/respostas?page=0&size=10&sort=atendidoPor,asc&atendidoPor=Esperança&novoStatus=ATENDIDO
 
 PUT:
-http://localhost:8080/respostas/1
+http://4.201.129.142:8080/respostas/1
 {
   "solicitacaoId": 1,
   "atendidoPor": "Instituto Renovado Esperança",
@@ -169,4 +202,4 @@ http://localhost:8080/respostas/1
 }
 
 DELETE:
-http://localhost:8080/respostas/1
+http://4.201.129.142:8080/respostas/1
