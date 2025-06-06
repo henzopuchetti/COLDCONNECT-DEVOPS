@@ -40,6 +40,23 @@ http://localhost:8080/abrigos
 GET: 
 http://localhost:8080/abrigos
 
+GET com filtro:
+http://localhost:8080/abrigos/filtro?nome=Abrigo
+
+PUT:
+http://localhost:8080/abrigos/1
+{
+  "id": 1,
+  "nome": "Abrigo Central Atualizado",
+  "localizacao": "Sudeste",
+  "capacidadeTotal": 120,
+  "capacidadeAtual": 90,
+  "status": "ATIVO"
+}
+
+DELETE:
+http://localhost:8080/abrigos/1
+
 --------------------------------------------------------------------
 
 ---Leituras---
@@ -51,17 +68,48 @@ http://localhost:8080/leituras
   "temperatura": -1.5
 }
 
+GET:
+http://localhost:8080/leituras
+
+GET filtros:
+http://localhost:8080/leituras/filtrar?temperaturaMax=20
+
+PUT:
+http://localhost:8080/leituras/1
+{
+  "latitude": -15.0,
+  "longitude": -47.0,
+  "temperatura": -2.0
+}
+
+DELETE:
+http://localhost:8080/leituras/1
+
 --------------------------------------------------------------------
 
 ---Alertas---
 GET (é gerado automaticamente):
 http://localhost:8080/alertas
 
+GET com filtro:
+http://localhost:8080/alertas?regiao=Sul
+
 --------------------------------------------------------------------
 
 ---Ações---
 GET (é gerado automaticamente):
 http://localhost:8080/acoes
+
+GET com filtro:
+http://localhost:8080/acoes?status=PENDENTE
+
+PUT:
+http://localhost:8080/acoes/1
+{
+  "tipo": "Alerta de Inundação",
+  "status": "EM_ANDAMENTO",
+  "alertaFrioId": 5
+}
 
 --------------------------------------------------------------------
 
@@ -78,6 +126,21 @@ http://localhost:8080/solicitacoes
 GET:
 http://localhost:8080/solicitacoes
 
+GET com filtro:
+http://localhost:8080/solicitacoes?tipoRecurso=Cobertores
+
+PUT:
+http://localhost:8080/solicitacoes/1
+{
+  "tipoRecurso": "Cobertores",
+  "quantidade": 25,
+  "abrigoId": 1,
+  "alertaId": 1
+}
+
+DELETE:
+http://localhost:8080/solicitacoes/1
+
 --------------------------------------------------------------------
 
 ---Respostas---
@@ -90,3 +153,20 @@ http://localhost:8080/respostas
   "novoStatus": "ATENDIDO"
 }
 
+GET:
+http://localhost:8080/respostas
+
+GET com filtro:
+http://localhost:8080/respostas?page=0&size=10&sort=atendidoPor,asc&atendidoPor=Esperança&novoStatus=ATENDIDO
+
+PUT:
+http://localhost:8080/respostas/1
+{
+  "solicitacaoId": 1,
+  "atendidoPor": "Instituto Renovado Esperança",
+  "observacao": "Mudamos o horário da entrega para amanhã cedo",
+  "novoStatus": "ATENDIDO"
+}
+
+DELETE:
+http://localhost:8080/respostas/1
