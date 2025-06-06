@@ -117,7 +117,7 @@ mvn spring-boot:run
 A API estará disponível em:
 📍 http://localhost:8080
 
-5. [Clique aqui para baixar o .txt com os endpoints para colocar no postman](postman.txt)
+5. [Clique aqui para baixar o .txt com os endpoints para colocar no postman](postman-banco.txt)
 
 ---
 ## 🔍 Documentação da API
