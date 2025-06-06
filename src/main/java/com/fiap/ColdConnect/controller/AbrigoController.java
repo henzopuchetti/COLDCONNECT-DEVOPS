@@ -1,9 +1,12 @@
 package com.fiap.ColdConnect.controller;
 
 import com.fiap.ColdConnect.dto.AbrigoDTO;
+import com.fiap.ColdConnect.model.filter.AbrigoFilter;
 import com.fiap.ColdConnect.service.AbrigoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +26,16 @@ public class AbrigoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AbrigoDTO>> listar() {
+    public ResponseEntity<List<AbrigoDTO>> listarTodos() {
         return ResponseEntity.ok(abrigoService.listarTodos());
+    }
+
+    @GetMapping("/filtro")
+    public ResponseEntity<Page<AbrigoDTO>> listarComFiltros(
+            AbrigoFilter filtro,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(abrigoService.listarComFiltros(filtro, pageable));
     }
 
     @GetMapping("/{id}")

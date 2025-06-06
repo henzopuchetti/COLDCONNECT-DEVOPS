@@ -1,7 +1,5 @@
 package com.fiap.ColdConnect.dto;
 
-
-import com.fiap.ColdConnect.model.enums.StatusResposta;
 import com.fiap.ColdConnect.model.enums.StatusSolicitacao;
 
 import jakarta.validation.constraints.*;

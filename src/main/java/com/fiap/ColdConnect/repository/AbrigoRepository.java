@@ -1,7 +1,9 @@
 package com.fiap.ColdConnect.repository;
 
-import com.fiap.ColdConnect.model.Abrigo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface AbrigoRepository extends JpaRepository<Abrigo, Long> {
+import com.fiap.ColdConnect.model.Abrigo;
+
+public interface AbrigoRepository extends JpaRepository<Abrigo, Long>, JpaSpecificationExecutor<Abrigo> {
 }

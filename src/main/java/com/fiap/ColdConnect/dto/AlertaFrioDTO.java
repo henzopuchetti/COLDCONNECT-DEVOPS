@@ -1,7 +1,6 @@
 package com.fiap.ColdConnect.dto;
 
 import com.fiap.ColdConnect.model.enums.GrauAlerta;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data

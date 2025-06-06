@@ -1,13 +1,15 @@
 package com.fiap.ColdConnect.controller;
 
 import com.fiap.ColdConnect.dto.AcaoEmergencialDTO;
+import com.fiap.ColdConnect.model.filter.AcaoEmergencialFilter;
 import com.fiap.ColdConnect.service.AcaoEmergencialService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/acoes")
@@ -22,8 +24,11 @@ public class AcaoEmergencialController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AcaoEmergencialDTO>> listarTodos() {
-        return ResponseEntity.ok(service.listarTodos());
+    public ResponseEntity<Page<AcaoEmergencialDTO>> listar(
+            AcaoEmergencialFilter filtro,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.listarComFiltro(filtro, pageable));
     }
 
     @GetMapping("/{id}")

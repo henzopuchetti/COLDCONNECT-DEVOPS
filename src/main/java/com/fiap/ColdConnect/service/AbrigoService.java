@@ -7,6 +7,10 @@ import com.fiap.ColdConnect.repository.AbrigoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.fiap.ColdConnect.model.filter.AbrigoFilter;
+import com.fiap.ColdConnect.specification.AbrigoSpecification;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,4 +57,10 @@ public class AbrigoService {
                 .orElseThrow(() -> new EntityNotFoundException("Abrigo não encontrado com ID: " + id));
         abrigoRepository.delete(abrigo);
     }
+
+    public Page<AbrigoDTO> listarComFiltros(AbrigoFilter filtro, Pageable pageable) {
+    return abrigoRepository.findAll(AbrigoSpecification.comFiltros(filtro), pageable)
+            .map(abrigoMapper::toDTO);
+}
+
 }

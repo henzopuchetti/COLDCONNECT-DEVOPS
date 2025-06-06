@@ -9,6 +9,11 @@ import com.fiap.ColdConnect.model.enums.GrauAlerta;
 import com.fiap.ColdConnect.model.enums.StatusAcao;
 import com.fiap.ColdConnect.repository.LeituraTemperaturaRepository;
 import com.fiap.ColdConnect.repository.AcaoEmergencialRepository;
+import com.fiap.ColdConnect.model.filter.LeituraTemperaturaFilter;
+import com.fiap.ColdConnect.specification.LeituraTemperaturaSpecification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -100,4 +105,10 @@ public class LeituraTemperaturaService {
         if (lat > -10 && lat < 0) return "Sudeste";
         return "Norte";
     }
+
+    public Page<LeituraTemperaturaDTO> buscarComFiltro(LeituraTemperaturaFilter filtro, Pageable pageable) {
+    Specification<LeituraTemperatura> spec = LeituraTemperaturaSpecification.filtrar(filtro);
+    return repository.findAll(spec, pageable)
+            .map(mapper::toDTO);
+}
 }

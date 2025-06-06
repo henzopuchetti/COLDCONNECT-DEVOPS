@@ -1,9 +1,12 @@
 package com.fiap.ColdConnect.controller;
 
 import com.fiap.ColdConnect.dto.LeituraTemperaturaDTO;
+import com.fiap.ColdConnect.model.filter.LeituraTemperaturaFilter;
 import com.fiap.ColdConnect.service.LeituraTemperaturaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,14 @@ public class LeituraTemperaturaController {
     public ResponseEntity<LeituraTemperaturaDTO> buscarPorId(@PathVariable Long id) {
         LeituraTemperaturaDTO dto = service.buscarPorId(id);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<Page<LeituraTemperaturaDTO>> filtrar(
+            @ModelAttribute LeituraTemperaturaFilter filtro,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.buscarComFiltro(filtro, pageable));
     }
 
     @PutMapping("/{id}")

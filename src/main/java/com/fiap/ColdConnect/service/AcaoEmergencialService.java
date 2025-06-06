@@ -3,9 +3,12 @@ package com.fiap.ColdConnect.service;
 import com.fiap.ColdConnect.dto.AcaoEmergencialDTO;
 import com.fiap.ColdConnect.mapper.AcaoEmergencialMapper;
 import com.fiap.ColdConnect.model.AcaoEmergencial;
+import com.fiap.ColdConnect.model.filter.AcaoEmergencialFilter;
 import com.fiap.ColdConnect.repository.AcaoEmergencialRepository;
+import com.fiap.ColdConnect.specification.AcaoEmergencialSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +55,17 @@ public class AcaoEmergencialService {
         AcaoEmergencial entidade = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ação Emergencial não encontrada com ID: " + id));
         repository.delete(entidade);
+    }
+
+        // Método novo de busca com filtro, paginação e ordenação
+    public Page<AcaoEmergencialDTO> listarComFiltro(AcaoEmergencialFilter filtro, Pageable pageable) {
+        Page<AcaoEmergencial> paginaEntidades = repository.findAll(
+                AcaoEmergencialSpecification.filtroDinamico(filtro), pageable);
+
+        List<AcaoEmergencialDTO> dtos = paginaEntidades.stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(dtos, pageable, paginaEntidades.getTotalElements());
     }
 }

@@ -6,9 +6,16 @@ import com.fiap.ColdConnect.model.RespostaSolicitacao;
 import com.fiap.ColdConnect.model.SolicitacaoRecurso;
 import com.fiap.ColdConnect.model.enums.StatusResposta;
 import com.fiap.ColdConnect.model.enums.StatusSolicitacao;
+import com.fiap.ColdConnect.model.filter.RespostaSolicitacaoFilter;
 import com.fiap.ColdConnect.repository.RespostaSolicitacaoRepository;
 import com.fiap.ColdConnect.repository.SolicitacaoRecursoRepository;
+import com.fiap.ColdConnect.specification.RespostaSolicitacaoSpecification;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -78,5 +85,12 @@ public RespostaSolicitacaoDTO criar(RespostaSolicitacaoDTO dto) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resposta não encontrada");
         }
         repository.deleteById(id);
+    }
+
+    public Page<RespostaSolicitacaoDTO> listarComFiltros(RespostaSolicitacaoFilter filtro, Pageable pageable) {
+    Specification<RespostaSolicitacao> spec = RespostaSolicitacaoSpecification.comFiltros(filtro);
+
+    return repository.findAll(spec, pageable)
+            .map(mapper::toDTO);
     }
 }

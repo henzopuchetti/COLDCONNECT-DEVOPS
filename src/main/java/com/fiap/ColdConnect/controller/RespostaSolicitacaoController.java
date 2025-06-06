@@ -1,13 +1,16 @@
 package com.fiap.ColdConnect.controller;
 
 import com.fiap.ColdConnect.dto.RespostaSolicitacaoDTO;
+import com.fiap.ColdConnect.model.filter.RespostaSolicitacaoFilter;
 import com.fiap.ColdConnect.service.RespostaSolicitacaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/respostas")
@@ -23,9 +26,10 @@ public class RespostaSolicitacaoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RespostaSolicitacaoDTO>> listar() {
-        List<RespostaSolicitacaoDTO> lista = service.listarTodos();
-        return ResponseEntity.ok(lista);
+    public ResponseEntity<Page<RespostaSolicitacaoDTO>> listarComFiltros(
+            RespostaSolicitacaoFilter filtro,
+            @PageableDefault(size = 10, sort = "id") Pageable pageable) {
+        return ResponseEntity.ok(service.listarComFiltros(filtro, pageable));
     }
 
     @GetMapping("/{id}")

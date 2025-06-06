@@ -1,3 +1,4 @@
+// 3. Atualização em SolicitacaoRecursoService.java
 package com.fiap.ColdConnect.service;
 
 import com.fiap.ColdConnect.dto.SolicitacaoRecursoDTO;
@@ -6,10 +7,14 @@ import com.fiap.ColdConnect.model.Abrigo;
 import com.fiap.ColdConnect.model.AlertaFrio;
 import com.fiap.ColdConnect.model.SolicitacaoRecurso;
 import com.fiap.ColdConnect.model.enums.StatusSolicitacao;
+import com.fiap.ColdConnect.model.filter.SolicitacaoRecursoFilter;
 import com.fiap.ColdConnect.repository.AbrigoRepository;
 import com.fiap.ColdConnect.repository.AlertaFrioRepository;
 import com.fiap.ColdConnect.repository.SolicitacaoRecursoRepository;
+import com.fiap.ColdConnect.specification.SolicitacaoRecursoSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -45,6 +50,11 @@ public class SolicitacaoRecursoService {
         return repository.findAll().stream()
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Page<SolicitacaoRecursoDTO> buscarComFiltro(SolicitacaoRecursoFilter filtro, Pageable pageable) {
+        return repository.findAll(SolicitacaoRecursoSpecification.comFiltros(filtro), pageable)
+                .map(mapper::toDTO);
     }
 
     public SolicitacaoRecursoDTO buscarPorId(Long id) {

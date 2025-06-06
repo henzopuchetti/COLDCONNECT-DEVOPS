@@ -1,13 +1,15 @@
 package com.fiap.ColdConnect.controller;
 
 import com.fiap.ColdConnect.dto.SolicitacaoRecursoDTO;
+import com.fiap.ColdConnect.model.filter.SolicitacaoRecursoFilter;
 import com.fiap.ColdConnect.service.SolicitacaoRecursoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/solicitacoes")
@@ -17,15 +19,17 @@ public class SolicitacaoRecursoController {
     private final SolicitacaoRecursoService service;
 
     @PostMapping
-    public ResponseEntity<SolicitacaoRecursoDTO> criar(@RequestBody @Valid SolicitacaoRecursoDTO dto) {
-        SolicitacaoRecursoDTO criado = service.criar(dto);
-        return ResponseEntity.status(201).body(criado);
+    @ResponseStatus(HttpStatus.CREATED)
+    public SolicitacaoRecursoDTO criar(@RequestBody @Valid SolicitacaoRecursoDTO dto) {
+        return service.criar(dto);
     }
 
     @GetMapping
-    public ResponseEntity<List<SolicitacaoRecursoDTO>> listar() {
-        List<SolicitacaoRecursoDTO> lista = service.listarTodos();
-        return ResponseEntity.ok(lista);
+    public ResponseEntity<Page<SolicitacaoRecursoDTO>> listar(
+            SolicitacaoRecursoFilter filtro,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.buscarComFiltro(filtro, pageable));
     }
 
     @GetMapping("/{id}")
